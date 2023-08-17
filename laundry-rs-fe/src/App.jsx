@@ -1,10 +1,17 @@
 import { Suspense, lazy, useState } from "react";
 import { RouterElement } from "./routes";
+import { Link, Route, Router, Routes, useRoutes } from "react-router-dom";
 
 function App() {
-    // const Dashboard = lazy(() => import('./pages/dashboard/Index.jsx'));
-
-    return <RouterElement />;
+    return (
+        <Suspense fallback="loading...">
+            <Routes>
+                {RouterElement().map((r, i) => (
+                    <Route key={i} path={r.path} element={<r.element />} />
+                ))}
+            </Routes>
+        </Suspense>
+    );
 }
 
 export default App;

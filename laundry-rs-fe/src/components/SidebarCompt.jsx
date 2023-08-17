@@ -6,10 +6,10 @@ export const SidebarCompt = () => {
         <aside id="sidebar" className="sidebar">
             <ul className="sidebar-nav" id="sidebar-nav">
                 <li className="nav-item">
-                    <a className="nav-link collapsed" href="index.html">
+                    <Link to="/" className="nav-link collapsed">
                         <i className="bi bi-grid" />
                         <span>Dashboard</span>
-                    </a>
+                    </Link>
                 </li>
                 {/* End Dashboard Nav */}
                 <li className="nav-item">
@@ -25,7 +25,7 @@ export const SidebarCompt = () => {
                     </a>
                     <ul id="components-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="/">
+                            <Link to="/master-data/product">
                                 <i className="bi bi-circle" />
                                 <span>Product</span>
                             </Link>

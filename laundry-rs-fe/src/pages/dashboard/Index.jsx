@@ -1,16 +1,8 @@
 import React from "react";
+import AuthenticatedLayout from "../../layouts/AuthenticatedLayout";
 
-// const Index = () => {
-//     return <div>Index</div>;
-// };
 function Index() {
-    return (
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean posuere fermentum lacinia. Nullam
-            
-        </div>
-    );
+    return <AuthenticatedLayout>dsdd</AuthenticatedLayout>;
 }
-
 
 export default Index;
