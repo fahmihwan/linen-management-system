@@ -7,13 +7,38 @@ export function RouterElement() {
     const routes = [
         {
             path: "/",
-            name: "index",
+            name: "dashboard",
             element: lazy(() => import(`../pages/dashboard/Index`)),
         },
         {
             path: "/master-data/product",
-            name: "index",
+            name: "product-index",
             element: lazy(() => import(`../pages/master-data/product/Index`)),
+        },
+        {
+            path: "/master-data/product/create",
+            name: "product-create",
+            element: lazy(() => import(`../pages/master-data/product/Create`)),
+        },
+        {
+            path: "/master-data/room",
+            name: "room-index",
+            element: lazy(() => import(`../pages/master-data/room/Index`)),
+        },
+        {
+            path: "/master-data/room/create",
+            name: "room-create",
+            element: lazy(() => import(`../pages/master-data/room/Create`)),
+        },
+        {
+            path: "/master-data/status",
+            name: "status-index",
+            element: lazy(() => import(`../pages/master-data/status/Index`)),
+        },
+        {
+            path: "/master-data/status/create",
+            name: "status-create",
+            element: lazy(() => import(`../pages/master-data/status/Create`)),
         },
     ];
 

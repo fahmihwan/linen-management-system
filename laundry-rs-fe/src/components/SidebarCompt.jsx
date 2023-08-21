@@ -31,13 +31,13 @@ export const SidebarCompt = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/">
+                            <Link to="/master-data/room">
                                 <i className="bi bi-circle" />
                                 <span>Room</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/">
+                            <Link to="/master-data/status">
                                 <i className="bi bi-circle" />
                                 <span>Status</span>
                             </Link>
