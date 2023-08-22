@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Pagination;
 use App\Models\Room;
+use Exception;
+use App\Helpers\Response;
 use Illuminate\Http\Request;
+
 
 class RoomController extends Controller
 {
-    public function index()
+
+
+    public function index(Request $request)
     {
         return response()->json([
             'message' => 'rooms retrieved successfully',
@@ -52,6 +58,6 @@ class RoomController extends Controller
             return response()->json(['message' => 'room not found'], 404);
         }
         $product->delete();
-        return response()->json(['message' => 'room deleted successfully'], 204);
+        return response()->json(['message' => 'room deleted successfully'], 200);
     }
 }

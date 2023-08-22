@@ -53,6 +53,6 @@ class ProductController extends Controller
             return response()->json(['message' => 'product not found'], 404);
         }
         $product->delete();
-        return response()->json(['message' => 'product deleted successfully'], 204);
+        return response()->json(['message' => 'product deleted successfully'], 200);
     }
 }

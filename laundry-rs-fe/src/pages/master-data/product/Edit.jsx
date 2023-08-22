@@ -1,41 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "../../../layouts/AuthenticatedLayout";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { InputCompt } from "../../../components/InputCompt";
 import httpRequest from "../../../utils/httpRequest";
 import Swal from "sweetalert2";
 
-const Create = () => {
+const Edit = () => {
     const [name, setName] = useState("");
-    const [isSubmit, setIsSubmit] = useState(false);
     const navigate = useNavigate();
-
+    const { id } = useParams();
     const dataView = {
-        title: "Tambah Product",
+        title: "Edit Product",
         linkBack: "/master-data/product",
     };
-    const handleSubmit = (e) => {
-        setIsSubmit(true);
-        e.preventDefault();
+    const fetchData = () => {
         httpRequest({
-            url: "/product",
-            method: "POST",
+            url: `/product/${id}`,
+            method: "get",
+        }).then((res) => {
+            setName(res?.data?.data.product_name);
+        });
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        httpRequest({
+            url: `/product/${id}`,
+            method: "PUT",
             data: {
                 product_name: name,
             },
         })
             .then((res) => {
-                if (res.status == 201) {
-                    Swal.fire("success", "Data berhasil di ditambah...", "success");
+                if (res.status == 200) {
+                    Swal.fire("success", "Data berhasil di update...", "success");
                     navigate(dataView?.linkBack);
                 }
             })
-            .catch((err) => {
-                console.log(err);
-                setIsSubmit(false);
-            });
+            .catch((err) => console.log(err));
     };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <AuthenticatedLayout>
@@ -71,11 +78,7 @@ const Create = () => {
                                     />
 
                                     <div className="d-flex justify-content-end ">
-                                        <button
-                                            disabled={isSubmit}
-                                            type="submit"
-                                            className="btn btn-primary me-2"
-                                        >
+                                        <button type="submit" className="btn btn-primary me-2">
                                             Submit
                                         </button>
                                         <button type="reset" className="btn btn-secondary">
@@ -93,4 +96,4 @@ const Create = () => {
     );
 };
 
-export default Create;
+export default Edit;

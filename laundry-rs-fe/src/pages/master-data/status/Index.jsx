@@ -1,12 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "../../../layouts/AuthenticatedLayout";
 import { Link } from "react-router-dom";
+import httpRequest from "../../../utils/httpRequest";
+import { PaginationCompt } from "../../../components/PaginationCompt";
+import Swal from "sweetalert2";
 
 const Index = () => {
     const dataView = {
         title: "List Status",
         linkCreate: "/master-data/status/create",
     };
+
+    const [data, setData] = useState({});
+    const [linkPage, setLinkPage] = useState("/status");
+
+    const fetchData = () => {
+        httpRequest({
+            url: linkPage,
+            method: "GET",
+        }).then((res) => {
+            setData(res.data?.data);
+        });
+    };
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Do you want to delete?",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                httpRequest({
+                    url: `/status/${id}`,
+                    method: "DELETE",
+                }).then((res) => {
+                    fetchData();
+                    if (res.status == 200) {
+                        Swal.fire("Saved!", "", "success");
+                    }
+                });
+            }
+        });
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [linkPage]);
 
     return (
         <AuthenticatedLayout>
@@ -33,18 +72,38 @@ const Index = () => {
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Product</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Brandon Jacob</td>
-                                        <td>28</td>
-                                    </tr>
+                                    {data?.data?.map((d, i) => (
+                                        <tr key={i}>
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{d?.status_name}</td>
+                                            <td>
+                                                <Link
+                                                    to={`/master-data/status/${d?.id}/edit`}
+                                                    className="btn btn-warning me-2"
+                                                >
+                                                    Edit
+                                                </Link>
+                                                <button
+                                                    onClick={() => handleDelete(d?.id)}
+                                                    className="btn btn-danger"
+                                                >
+                                                    delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
+                            <PaginationCompt
+                                total={data?.total}
+                                links={data?.links}
+                                setLinkPage={setLinkPage}
+                            />
                             {/* End Table with hoverable rows */}
                         </div>
                     </div>

@@ -53,6 +53,6 @@ class StatusController extends Controller
             return response()->json(['message' => 'status not found'], 404);
         }
         $product->delete();
-        return response()->json(['message' => 'status deleted successfully'], 204);
+        return response()->json(['message' => 'status deleted successfully'], 200);
     }
 }

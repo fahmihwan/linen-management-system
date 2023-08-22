@@ -11,6 +11,7 @@ export const SidebarCompt = () => {
                         <span>Dashboard</span>
                     </Link>
                 </li>
+                <li className="nav-heading">Master Data</li>
                 {/* End Dashboard Nav */}
                 <li className="nav-item">
                     <a
@@ -44,17 +45,23 @@ export const SidebarCompt = () => {
                         </li>
                     </ul>
                 </li>
+                <li className="nav-item">
+                    <Link to="/detail-product" className="nav-link collapsed">
+                        <i className="bi bi-grid" />
+                        <span>Detail Product</span>
+                    </Link>
+                </li>
                 {/* End Components Nav */}
                 {/* End Icons Nav */}
-                <li className="nav-heading">Pages</li>
+                {/* <li className="nav-heading">Pages</li> */}
 
                 {/* End Error 404 Page Nav */}
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <a className="nav-link " href="pages-blank.html">
                         <i className="bi bi-file-earmark" />
                         <span>Blank</span>
                     </a>
-                </li>
+                </li> */}
                 {/* End Blank Page Nav */}
             </ul>
         </aside>

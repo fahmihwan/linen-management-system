@@ -1,41 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "../../../layouts/AuthenticatedLayout";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { InputCompt } from "../../../components/InputCompt";
 import httpRequest from "../../../utils/httpRequest";
 import Swal from "sweetalert2";
 
-const Create = () => {
+const Edit = () => {
     const [name, setName] = useState("");
-    const [isSubmit, setIsSubmit] = useState(false);
     const navigate = useNavigate();
+    const { id } = useParams();
 
     const dataView = {
-        title: "Tambah Product",
-        linkBack: "/master-data/product",
+        title: "Room Edit",
+        linkBack: "/master-data/room",
+    };
+    const fetchData = () => {
+        httpRequest({
+            url: `/room/${id}`,
+            method: "GET",
+        }).then((res) => {
+            setName(res?.data?.data.product_name);
+        });
     };
     const handleSubmit = (e) => {
-        setIsSubmit(true);
         e.preventDefault();
+
         httpRequest({
-            url: "/product",
-            method: "POST",
+            url: `/room/${id}`,
+            method: "PUT",
             data: {
-                product_name: name,
+                room_name: name,
             },
         })
             .then((res) => {
-                if (res.status == 201) {
-                    Swal.fire("success", "Data berhasil di ditambah...", "success");
+                if (res.status == 200) {
+                    Swal.fire("success", "Data berhasil di update...", "success");
                     navigate(dataView?.linkBack);
                 }
             })
-            .catch((err) => {
-                console.log(err);
-                setIsSubmit(false);
-            });
+            .catch((err) => console.log(err));
     };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <AuthenticatedLayout>
@@ -45,7 +53,7 @@ const Create = () => {
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">Master Data</li>
                         <li className="breadcrumb-item">
-                            <Link to={dataView.linkBack}>List Product</Link>
+                            <Link to={dataView.linkBack}>List Room</Link>
                         </li>
                         <li className="breadcrumb-item active">{dataView.title}</li>
                     </ol>
@@ -54,7 +62,7 @@ const Create = () => {
             <section className="section">
                 <div className="d-flex mb-2 justify-content-end">
                     <Link className="btn btn-primary" to="/master-data/product">
-                        Kembali
+                        back
                     </Link>
                 </div>
                 <div className="row">
@@ -71,11 +79,7 @@ const Create = () => {
                                     />
 
                                     <div className="d-flex justify-content-end ">
-                                        <button
-                                            disabled={isSubmit}
-                                            type="submit"
-                                            className="btn btn-primary me-2"
-                                        >
+                                        <button type="submit" className="btn btn-primary me-2">
                                             Submit
                                         </button>
                                         <button type="reset" className="btn btn-secondary">
@@ -93,4 +97,4 @@ const Create = () => {
     );
 };
 
-export default Create;
+export default Edit;

@@ -1,21 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthenticatedLayout from "../../../layouts/AuthenticatedLayout";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import { InputCompt } from "../../../components/InputCompt";
+import Swal from "sweetalert2";
+import httpRequest from "../../../utils/httpRequest";
 
 const Create = () => {
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm();
-    const onSubmit = (data) => console.log(data);
+    const [name, setName] = useState("");
+    const [isSubmit, setIsSubmit] = useState(false);
+    const navigate = useNavigate();
 
     const dataView = {
         title: "Tamabah Status",
         linkBack: "/master-data/status",
+    };
+
+    const handleSubmit = (e) => {
+        setIsSubmit(true);
+        e.preventDefault();
+        httpRequest({
+            url: "/status",
+            method: "POST",
+            data: {
+                status_name: name,
+            },
+        })
+            .then((res) => {
+                if (res.status == 201) {
+                    Swal.fire("success", "Data berhasil di ditambah...", "success");
+                    navigate(dataView?.linkBack);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsSubmit(false);
+            });
     };
     return (
         <AuthenticatedLayout>
@@ -43,8 +62,12 @@ const Create = () => {
                             <div className="card-body">
                                 <h5 className="card-title">Form {dataView.title}</h5>
                                 {/* Floating Labels Form */}
-                                <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
-                                    <InputCompt register={register("product_name")} title="nama produk" />
+                                <form className="row g-3" onSubmit={handleSubmit}>
+                                    <InputCompt
+                                        onChange={(e) => setName(e.target.value)}
+                                        title="status name"
+                                        value={name}
+                                    />
 
                                     <div className="d-flex justify-content-end ">
                                         <button type="submit" className="btn btn-primary me-2">
