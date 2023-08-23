@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import AuthenticatedLayout from "../../../layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "../../layouts/AuthenticatedLayout";
 import { Link } from "react-router-dom";
-import httpRequest from "../../../utils/httpRequest";
+import httpRequest from "../../utils/httpRequest";
 import Swal from "sweetalert2";
-import { PaginationCompt } from "../../../components/PaginationCompt";
+import { PaginationCompt } from "../../components/PaginationCompt";
 
 const Index = () => {
     const [data, setData] = useState({});
-    const [linkPage, setLinkPage] = useState("/rooms");
+    const [linkPage, setLinkPage] = useState("/detail-products");
 
     const dataView = {
-        title: "List rooms",
-        linkCreate: "/master-data/room/create",
+        title: "List staff",
+        linkCreate: "/staff/create",
     };
 
     const fetchData = () => {
         httpRequest({
             url: linkPage,
-            method: "GET",
+            method: "get",
         }).then((res) => {
             setData(res.data?.data);
         });
@@ -31,7 +31,7 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 httpRequest({
-                    url: `/room/${id}`,
+                    url: `/detail-product/${id}`,
                     method: "DELETE",
                 }).then((res) => {
                     fetchData();
@@ -44,7 +44,7 @@ const Index = () => {
     };
 
     useEffect(() => {
-        fetchData();
+        // fetchData();
     }, [linkPage]);
 
     return (
@@ -72,18 +72,25 @@ const Index = () => {
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Room</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Nama</th>
+                                        <th scope="col">username</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Telp</th>
+                                        <th scope="col">role</th>
+                                        <th scope="col">image</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* {data?.data?.map((d, i) => (
+                                    {data?.data?.map((d, i) => (
                                         <tr key={i}>
                                             <th scope="row">{i + 1}</th>
-                                            <td>{d?.room_name}</td>
+                                            <td>{d?.product?.product_name}</td>
+                                            <td>{d?.room?.room_name}</td>
+                                            <td>{d?.qr_code}</td>
+                                            <td>{d?.status?.status_name}</td>
                                             <td>
                                                 <Link
-                                                    to={`/master-data/room/${d?.id}/edit`}
+                                                    to={`/detail-product/${d?.id}/edit`}
                                                     className="btn btn-warning me-2"
                                                 >
                                                     Edit
@@ -96,7 +103,7 @@ const Index = () => {
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))} */}
+                                    ))}
                                 </tbody>
                             </table>
                             <PaginationCompt

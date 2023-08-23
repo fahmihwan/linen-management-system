@@ -56,9 +56,40 @@ export function RouterElement() {
             element: lazy(() => import(`../pages/master-data/status/Edit`)),
         },
         {
+            path: "/master-data/role",
+            name: "role-index",
+            element: lazy(() => import(`../pages/master-data/role/Index`)),
+        },
+        {
+            path: "/master-data/role/create",
+            name: "role-create",
+            element: lazy(() => import(`../pages/master-data/role/Create`)),
+        },
+        {
             path: "/detail-product",
             name: "detail-product",
             element: lazy(() => import(`../pages/detail-product/Index`)),
+        },
+        {
+            path: "/detail-product/create",
+            name: "detail-product-create",
+            element: lazy(() => import(`../pages/detail-product/Create`)),
+        },
+        {
+            path: "/detail-product/:id/edit",
+            name: "detail-product-edit",
+            element: lazy(() => import(`../pages/detail-product/Edit`)),
+        },
+
+        {
+            path: "/staff",
+            name: "staff-index",
+            element: lazy(() => import(`../pages/staff/Index`)),
+        },
+        {
+            path: "/staff/create",
+            name: "staff-index",
+            element: lazy(() => import(`../pages/staff/Create`)),
         },
     ];
 

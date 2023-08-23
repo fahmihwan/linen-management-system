@@ -55,4 +55,11 @@ class StatusController extends Controller
         $product->delete();
         return response()->json(['message' => 'status deleted successfully'], 200);
     }
+    public function list()
+    {
+        return response()->json([
+            'message' => 'status retrieved successfully',
+            'data' => Status::select(['id as value', 'status_name as label'])->latest()->get()
+        ], 200);
+    }
 }

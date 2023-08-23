@@ -60,4 +60,11 @@ class RoomController extends Controller
         $product->delete();
         return response()->json(['message' => 'room deleted successfully'], 200);
     }
+    public function list()
+    {
+        return response()->json([
+            'message' => 'rooms retrieved successfully',
+            'data' => Room::select(['id as value', 'room_name as label'])->latest()->get()
+        ], 200);
+    }
 }

@@ -43,12 +43,30 @@ export const SidebarCompt = () => {
                                 <span>Status</span>
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/master-data/role">
+                                <i className="bi bi-circle" />
+                                <span>role</span>
+                            </Link>
+                        </li>
                     </ul>
                 </li>
                 <li className="nav-item">
                     <Link to="/detail-product" className="nav-link collapsed">
                         <i className="bi bi-grid" />
                         <span>Detail Product</span>
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/staff" className="nav-link collapsed">
+                        <i className="bi bi-grid" />
+                        <span>Staff</span>
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/detail-product" className="nav-link collapsed">
+                        <i className="bi bi-grid" />
+                        <span>History</span>
                     </Link>
                 </li>
                 {/* End Components Nav */}

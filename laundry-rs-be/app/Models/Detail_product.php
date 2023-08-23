@@ -9,4 +9,17 @@ class Detail_product extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
 }

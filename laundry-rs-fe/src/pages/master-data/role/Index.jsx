@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "../../../layouts/AuthenticatedLayout";
 import { Link } from "react-router-dom";
 import httpRequest from "../../../utils/httpRequest";
-import Swal from "sweetalert2";
 import { PaginationCompt } from "../../../components/PaginationCompt";
+import Swal from "sweetalert2";
 
 const Index = () => {
-    const [data, setData] = useState({});
-    const [linkPage, setLinkPage] = useState("/rooms");
-
     const dataView = {
-        title: "List rooms",
-        linkCreate: "/master-data/room/create",
+        title: "List Roles",
+        linkCreate: "/master-data/role/create",
     };
+
+    const [data, setData] = useState({});
+    const [linkPage, setLinkPage] = useState("/roles");
 
     const fetchData = () => {
         httpRequest({
@@ -31,7 +31,7 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 httpRequest({
-                    url: `/room/${id}`,
+                    url: `/status/${id}`,
                     method: "DELETE",
                 }).then((res) => {
                     fetchData();
@@ -72,18 +72,18 @@ const Index = () => {
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Room</th>
+                                        <th scope="col">Role</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* {data?.data?.map((d, i) => (
+                                    {data?.data?.map((d, i) => (
                                         <tr key={i}>
                                             <th scope="row">{i + 1}</th>
-                                            <td>{d?.room_name}</td>
+                                            <td>{d?.role_name}</td>
                                             <td>
                                                 <Link
-                                                    to={`/master-data/room/${d?.id}/edit`}
+                                                    to={`/master-data/status/${d?.id}/edit`}
                                                     className="btn btn-warning me-2"
                                                 >
                                                     Edit
@@ -96,7 +96,7 @@ const Index = () => {
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))} */}
+                                    ))}
                                 </tbody>
                             </table>
                             <PaginationCompt

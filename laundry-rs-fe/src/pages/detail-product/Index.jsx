@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import AuthenticatedLayout from "../../../layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "../../layouts/AuthenticatedLayout";
 import { Link } from "react-router-dom";
-import httpRequest from "../../../utils/httpRequest";
+import httpRequest from "../../utils/httpRequest";
 import Swal from "sweetalert2";
-import { PaginationCompt } from "../../../components/PaginationCompt";
+import { PaginationCompt } from "../../components/PaginationCompt";
 
 const Index = () => {
     const [data, setData] = useState({});
-    const [linkPage, setLinkPage] = useState("/rooms");
+    const [linkPage, setLinkPage] = useState("/detail-products");
 
     const dataView = {
-        title: "List Room",
-        linkCreate: "/master-data/room/create",
+        title: "List Detail Products",
+        linkCreate: "/detail-product/create",
     };
 
     const fetchData = () => {
@@ -31,7 +31,7 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 httpRequest({
-                    url: `/room/${id}`,
+                    url: `/detail-product/${id}`,
                     method: "DELETE",
                 }).then((res) => {
                     fetchData();
@@ -72,7 +72,10 @@ const Index = () => {
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Product</th>
                                         <th scope="col">Room</th>
+                                        <th scope="col">Qrcode</th>
+                                        <th scope="col">status</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -80,10 +83,13 @@ const Index = () => {
                                     {data?.data?.map((d, i) => (
                                         <tr key={i}>
                                             <th scope="row">{i + 1}</th>
-                                            <td>{d?.room_name}</td>
+                                            <td>{d?.product?.product_name}</td>
+                                            <td>{d?.room?.room_name}</td>
+                                            <td>{d?.qr_code}</td>
+                                            <td>{d?.status?.status_name}</td>
                                             <td>
                                                 <Link
-                                                    to={`/master-data/room/${d?.id}/edit`}
+                                                    to={`/detail-product/${d?.id}/edit`}
                                                     className="btn btn-warning me-2"
                                                 >
                                                     Edit

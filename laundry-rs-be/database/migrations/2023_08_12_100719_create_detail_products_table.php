@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Product::class);
             $table->foreignIdFor(Room::class);
-            $table->string('code_barcode')->unique();
+            $table->string('qr_code')->unique();
             $table->foreignIdFor(Status::class);
             $table->timestamps();
         });

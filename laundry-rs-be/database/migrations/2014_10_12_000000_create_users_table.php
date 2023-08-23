@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Role::class);
             $table->string('username');
             $table->string('password');
+            $table->string('image');
             $table->rememberToken();
             $table->timestamps();
         });
