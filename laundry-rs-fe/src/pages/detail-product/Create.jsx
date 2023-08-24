@@ -21,7 +21,7 @@ const Create = () => {
 
     const dataView = {
         title: "Create Detail Product",
-        linkBack: "/detail-product",
+        linkBack: "/admin/detail-product",
     };
 
     const fetchProduct = () => {

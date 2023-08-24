@@ -12,7 +12,7 @@ const Create = () => {
 
     const dataView = {
         title: "Tambah Roles",
-        linkBack: "/master-data/role",
+        linkBack: "/admin/master-data/role",
     };
 
     const handleSubmit = (e) => {

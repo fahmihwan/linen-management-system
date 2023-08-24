@@ -11,7 +11,7 @@ const Edit = () => {
     const { id } = useParams();
     const dataView = {
         title: "Edit Product",
-        linkBack: "/master-data/product",
+        linkBack: "/admin/master-data/product",
     };
     const fetchData = () => {
         httpRequest({
@@ -60,7 +60,7 @@ const Edit = () => {
             </div>
             <section className="section">
                 <div className="d-flex mb-2 justify-content-end">
-                    <Link className="btn btn-primary" to="/master-data/product">
+                    <Link className="btn btn-primary" to={dataView.linkBack}>
                         Kembali
                     </Link>
                 </div>

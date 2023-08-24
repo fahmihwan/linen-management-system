@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const Index = () => {
     const dataView = {
         title: "List Roles",
-        linkCreate: "/master-data/role/create",
+        linkCreate: "/admin/master-data/role/create",
     };
 
     const [data, setData] = useState({});
@@ -83,7 +83,7 @@ const Index = () => {
                                             <td>{d?.role_name}</td>
                                             <td>
                                                 <Link
-                                                    to={`/master-data/status/${d?.id}/edit`}
+                                                    to={`/admin/master-data/status/${d?.id}/edit`}
                                                     className="btn btn-warning me-2"
                                                 >
                                                     Edit

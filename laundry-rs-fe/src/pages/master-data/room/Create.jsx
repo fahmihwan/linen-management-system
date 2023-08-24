@@ -12,7 +12,7 @@ const Create = () => {
 
     const dataView = {
         title: "Tamabah Ruangan",
-        linkBack: "/master-data/room",
+        linkBack: "/admin/master-data/room",
     };
 
     const handleSubmit = (e) => {
@@ -28,7 +28,7 @@ const Create = () => {
             .then((res) => {
                 if (res.status == 201) {
                     Swal.fire("success", "Data berhasil di ditambah...", "success");
-                    navigate("/master-data/room");
+                    navigate(dataView?.linkBack);
                 }
             })
             .catch((err) => {

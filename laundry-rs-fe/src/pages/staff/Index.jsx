@@ -11,7 +11,7 @@ const Index = () => {
 
     const dataView = {
         title: "List staff",
-        linkCreate: "/staff/create",
+        linkCreate: "/admin/staff/create",
     };
 
     const fetchData = () => {
@@ -101,7 +101,7 @@ const Index = () => {
                                             </td>
                                             <td>
                                                 <Link
-                                                    to={`/staff/${d?.id}/edit`}
+                                                    to={`/admin/staff/${d?.id}/edit`}
                                                     className="btn btn-warning me-2"
                                                 >
                                                     Edit

@@ -26,25 +26,25 @@ export const SidebarCompt = () => {
                     </a>
                     <ul id="components-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="/master-data/product">
+                            <Link to="/admin/master-data/product">
                                 <i className="bi bi-circle" />
                                 <span>Product</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/master-data/room">
+                            <Link to="/admin/master-data/room">
                                 <i className="bi bi-circle" />
                                 <span>Room</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/master-data/status">
+                            <Link to="/admin/master-data/status">
                                 <i className="bi bi-circle" />
                                 <span>Status</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/master-data/role">
+                            <Link to="/admin/master-data/role">
                                 <i className="bi bi-circle" />
                                 <span>role</span>
                             </Link>
@@ -52,19 +52,19 @@ export const SidebarCompt = () => {
                     </ul>
                 </li>
                 <li className="nav-item">
-                    <Link to="/detail-product" className="nav-link collapsed">
+                    <Link to="admin/detail-product" className="nav-link collapsed">
                         <i className="bi bi-grid" />
                         <span>Detail Product</span>
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/staff" className="nav-link collapsed">
+                    <Link to="admin/staff" className="nav-link collapsed">
                         <i className="bi bi-grid" />
                         <span>Staff</span>
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/detail-product" className="nav-link collapsed">
+                    <Link to="admin/detail-product" className="nav-link collapsed">
                         <i className="bi bi-grid" />
                         <span>History</span>
                     </Link>

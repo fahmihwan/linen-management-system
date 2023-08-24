@@ -11,7 +11,7 @@ const Index = () => {
 
     const dataView = {
         title: "List Detail Products",
-        linkCreate: "/detail-product/create",
+        linkCreate: "/admin/detail-product/create",
     };
 
     const fetchData = () => {
@@ -89,7 +89,7 @@ const Index = () => {
                                             <td>{d?.status?.status_name}</td>
                                             <td>
                                                 <Link
-                                                    to={`/detail-product/${d?.id}/edit`}
+                                                    to={`/admin/detail-product/${d?.id}/edit`}
                                                     className="btn btn-warning me-2"
                                                 >
                                                     Edit

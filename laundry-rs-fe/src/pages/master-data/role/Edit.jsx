@@ -12,7 +12,7 @@ const Edit = () => {
 
     const dataView = {
         title: "Status Edit",
-        linkBack: "/master-data/status",
+        linkBack: "/admin/master-data/status",
     };
     const fetchData = () => {
         httpRequest({

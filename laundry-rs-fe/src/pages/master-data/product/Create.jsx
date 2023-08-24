@@ -13,7 +13,7 @@ const Create = () => {
 
     const dataView = {
         title: "Tambah Product",
-        linkBack: "/master-data/product",
+        linkBack: "/admin/master-data/product",
     };
     const handleSubmit = (e) => {
         setIsSubmit(true);
@@ -53,7 +53,7 @@ const Create = () => {
             </div>
             <section className="section">
                 <div className="d-flex mb-2 justify-content-end">
-                    <Link className="btn btn-primary" to="/master-data/product">
+                    <Link className="btn btn-primary" to={dataView.linkBack}>
                         Kembali
                     </Link>
                 </div>

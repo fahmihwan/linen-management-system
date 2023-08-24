@@ -12,7 +12,7 @@ const Edit = () => {
 
     const dataView = {
         title: "Room Edit",
-        linkBack: "/master-data/room",
+        linkBack: "/admin/master-data/room",
     };
     const fetchData = () => {
         httpRequest({

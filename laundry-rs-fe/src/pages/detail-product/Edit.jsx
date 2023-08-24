@@ -22,7 +22,7 @@ const Edit = () => {
 
     const dataView = {
         title: "Edit Detail Product",
-        linkBack: "/detail-product",
+        linkBack: "/admin/detail-product",
     };
 
     const fetchProduct = () => {

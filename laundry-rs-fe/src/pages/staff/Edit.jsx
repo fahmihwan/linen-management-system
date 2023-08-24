@@ -24,7 +24,7 @@ const Create = () => {
 
     const dataView = {
         title: "Edit Staff",
-        linkBack: "/staff",
+        linkBack: "/admin/staff",
     };
 
     const fetchStaff = (e) => {

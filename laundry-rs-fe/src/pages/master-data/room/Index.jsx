@@ -11,7 +11,7 @@ const Index = () => {
 
     const dataView = {
         title: "List rooms",
-        linkCreate: "/master-data/room/create",
+        linkCreate: "/admin/master-data/room/create",
     };
 
     const fetchData = () => {
@@ -77,13 +77,13 @@ const Index = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* {data?.data?.map((d, i) => (
+                                    {data?.data?.map((d, i) => (
                                         <tr key={i}>
                                             <th scope="row">{i + 1}</th>
                                             <td>{d?.room_name}</td>
                                             <td>
                                                 <Link
-                                                    to={`/master-data/room/${d?.id}/edit`}
+                                                    to={`/admin/master-data/room/${d?.id}/edit`}
                                                     className="btn btn-warning me-2"
                                                 >
                                                     Edit
@@ -96,7 +96,7 @@ const Index = () => {
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))} */}
+                                    ))}
                                 </tbody>
                             </table>
                             <PaginationCompt

@@ -23,7 +23,7 @@ const Create = () => {
 
     const dataView = {
         title: "Create Staff",
-        linkBack: "/staff",
+        linkBack: "/admin/staff",
     };
 
     const fetchRole = () => {
