@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\UserController;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -58,3 +59,9 @@ Route::post('/detail-product', [DetailProductController::class, 'store']);
 Route::get('/detail-product/{id}', [DetailProductController::class, 'show']);
 Route::put('/detail-product/{id}', [DetailProductController::class, 'update']);
 Route::delete('/detail-product/{id}', [DetailProductController::class, 'destroy']);
+
+Route::get('/users', [UserController::class, 'index']);
+Route::post('/user', [UserController::class, 'store']);
+Route::get('/user/{id}', [UserController::class, 'show']);
+Route::put('/user/{id}', [UserController::class, 'update']);
+Route::delete('/user/{id}', [UserController::class, 'destroy']);

@@ -1,18 +1,33 @@
 import React from "react";
 import Select from "react-select";
 
-export const InputCompt = ({ value, title, onChange }) => {
+export const InputCompt = ({ value, title, onChange, type = "text" }) => {
     return (
         <div className="form-floating">
             <input
                 value={value}
                 onChange={onChange}
-                type="text"
+                type={type}
                 className="form-control mb-2"
                 id="floatingName"
                 placeholder={title}
             />
             <label htmlFor="floatingName">{title}</label>
+        </div>
+    );
+};
+
+export const InputFileCompt = ({ title, onChange, accept }) => {
+    return (
+        <div>
+            <input
+                onChange={onChange}
+                accept={accept}
+                type="file"
+                className="form-control mb-2"
+                id="floatingName"
+                placeholder={title}
+            />
         </div>
     );
 };

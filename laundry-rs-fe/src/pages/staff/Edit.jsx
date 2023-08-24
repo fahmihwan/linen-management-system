@@ -1,94 +1,94 @@
 import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { InputCompt, SelectCompt } from "../../components/InputCompt";
+import { InputCompt, InputFileCompt, SelectCompt } from "../../components/InputCompt";
 import httpRequest from "../../utils/httpRequest";
 import Swal from "sweetalert2";
 import Select from "react-select";
 
-const Edit = () => {
-    const [name, setName] = useState("");
+const Create = () => {
     const [isSubmit, setIsSubmit] = useState(false);
-    const [optProduct, setOptProduct] = useState([]);
-    const [optRoom, setOptRoom] = useState([]);
-    const [optStatus, setOptStatus] = useState([]);
-
-    const [productName, setProductName] = useState({});
-    const [roomName, setRoomName] = useState("");
-    const [statusName, setStatusName] = useState("");
-    const [qrCode, setQrCode] = useState("");
-    const navigate = useNavigate();
+    const [optRole, setOptRole] = useState([]);
+    const [previewImg, setPreviewImg] = useState("");
     const { id } = useParams();
 
+    const [address, setAddress] = useState("");
+    const [name, setName] = useState("");
+    const [telp, setTelp] = useState("");
+    const [role, setRole] = useState("");
+    const [image, setImage] = useState(null);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
+
     const dataView = {
-        title: "Edit Detail Product",
-        linkBack: "/detail-product",
+        title: "Edit Staff",
+        linkBack: "/staff",
     };
 
-    const fetchProduct = () => {
+    const fetchStaff = (e) => {
         httpRequest({
-            url: "/products/list",
+            url: `/user/${id}`,
             method: "GET",
         }).then((res) => {
-            setOptProduct(res?.data?.data);
+            const response = res?.data?.data;
+            setName(response?.profile?.profile_name);
+            setAddress(response?.profile?.address);
+            setTelp(response?.profile?.telp);
+            setRole(response?.role_id);
+            setUsername(response?.username);
+            // setPassword(response?.password);
+            setPreviewImg("http://127.0.0.1:8000/storage/" + response?.image);
+
+            // setName(response?.name);
         });
     };
 
-    const fetchRoom = () => {
+    const fetchRole = () => {
         httpRequest({
-            url: "/rooms/list",
+            url: "/roles/list",
             method: "GET",
         }).then((res) => {
-            setOptRoom(res?.data?.data);
+            setOptRole(res?.data?.data);
         });
-    };
-    const fetchStatus = () => {
-        httpRequest({
-            url: "/status/list",
-            method: "GET",
-        }).then((res) => {
-            setOptStatus(res?.data?.data);
-        });
-    };
-
-    const fetchData = () => {
-        httpRequest({
-            url: `/detail-product/${id}`,
-            method: "GET",
-        })
-            .then((res) => {
-                let data = res?.data?.data;
-                setProductName({ value: data?.product?.id, label: data?.product?.product_name });
-                setRoomName({ value: data?.room?.id, label: data?.room?.room_name });
-                setStatusName(data?.status.id);
-                setQrCode(data?.qr_code);
-            })
-            .catch((err) => console.log(err));
     };
 
     useEffect(() => {
-        fetchProduct();
-        fetchRoom();
-        fetchData();
-        fetchStatus();
+        fetchRole();
+        fetchStaff();
     }, []);
+
+    const handleImagePreview = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            setImage(selectedFile);
+
+            const imageUrl = URL.createObjectURL(selectedFile);
+            setPreviewImg(imageUrl);
+        }
+    };
 
     const handleSubmit = (e) => {
         setIsSubmit(true);
         e.preventDefault();
+        const formData = new FormData();
+
+        formData.append("profile_name", name);
+        formData.append("address", address);
+        formData.append("telp", telp);
+        formData.append("role_id", role);
+        formData.append("username", username);
+        formData.append("password", password);
+        formData.append("image", image);
 
         httpRequest({
-            url: `/detail-product/${id}`,
-            method: "PUT",
-            data: {
-                product_id: productName?.value,
-                room_id: roomName?.value,
-                status_id: statusName,
-                qr_code: qrCode,
-            },
+            url: "/user",
+            method: "POST",
+            data: formData,
         })
             .then((res) => {
-                if (res.status == 200) {
+                if (res.status == 201) {
                     Swal.fire("success", "Data berhasil di ditambah...", "success");
                     navigate(dataView?.linkBack);
                 }
@@ -120,79 +120,96 @@ const Edit = () => {
                     </Link>
                 </div>
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-8">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Form {dataView.title}</h5>
                                 {/* Floating Labels Form */}
-                                <form className="row g-3" onSubmit={handleSubmit}>
-                                    {/* SELECT IS WORKING! */}
-                                    {/* <select name="" id="" value={productName?.value}>
-                                        {optProduct?.map((d, i) => (
-                                            <option key={i} value={d?.value}>
-                                                {d?.label}
-                                            </option>
-                                        ))}
-                                    </select> */}
-                                    <SelectCompt
-                                        placeholder="Product"
-                                        onChange={(data) => setProductName(data)}
-                                        options={optProduct}
-                                        value={productName}
-                                    />
-                                    <SelectCompt
-                                        placeholder="Room"
-                                        onChange={(data) => setRoomName(data)}
-                                        options={optRoom}
-                                        value={roomName}
-                                    />
-                                    <InputCompt
-                                        onChange={(e) => setQrCode(e.target.value)}
-                                        title="Qr Code"
-                                        value={qrCode}
-                                    />
-
-                                    <fieldset className="row my-3">
-                                        <legend className="col-form-label col-sm-3 pt-0">Status</legend>
-                                        <div className="col-sm-9">
-                                            {optStatus?.map((d, i) => (
-                                                <div key={i} className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="radio"
-                                                        name="gridRadios"
-                                                        id={`radio-${i}`}
-                                                        // defaultValue={d?.value}
-                                                        checked={d?.value == statusName}
-                                                        value={d?.value}
-                                                        onChange={(e) => setStatusName(e.target.value)}
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor={`radio-${i}`}
-                                                    >
-                                                        {d?.label}
-                                                    </label>
-                                                </div>
-                                            ))}
+                                <form
+                                    className="row g-3"
+                                    onSubmit={handleSubmit}
+                                    encType="multipart/form-data"
+                                >
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <InputCompt
+                                                onChange={(e) => setName(e.target.value)}
+                                                title="Name"
+                                                value={name}
+                                            />
+                                            <InputCompt
+                                                onChange={(e) => setAddress(e.target.value)}
+                                                title="Address"
+                                                value={address}
+                                            />
+                                            <InputCompt
+                                                onChange={(e) => setTelp(e.target.value)}
+                                                title="Telp"
+                                                value={telp}
+                                            />
+                                            <InputFileCompt
+                                                onChange={handleImagePreview}
+                                                title="Profile image"
+                                                // accept="image/*"
+                                            />
                                         </div>
-                                    </fieldset>
-
-                                    <div className="d-flex justify-content-end ">
-                                        <button
-                                            disabled={isSubmit}
-                                            type="submit"
-                                            className="btn btn-primary me-2"
-                                        >
-                                            Submit
-                                        </button>
-                                        <button type="reset" className="btn btn-secondary">
-                                            Reset
-                                        </button>
+                                        <div className="col-md-6">
+                                            <InputCompt
+                                                onChange={(e) => setUsername(e.target.value)}
+                                                title="Username"
+                                                value={username}
+                                            />
+                                            <InputCompt
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                title="Password"
+                                                value={password}
+                                            />
+                                            <fieldset className="row my-3">
+                                                <legend className="col-form-label col-sm-3 pt-0">Role</legend>
+                                                <div className="col-sm-9">
+                                                    {optRole?.map((d, i) => (
+                                                        <div key={i} className="form-check">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type="radio"
+                                                                name="gridRadios"
+                                                                id={`radio-${i}`}
+                                                                checked={d?.value == role}
+                                                                value={d?.value}
+                                                                onChange={(e) => setRole(e.target.value)}
+                                                            />
+                                                            <label
+                                                                className="form-check-label"
+                                                                htmlFor={`radio-${i}`}
+                                                            >
+                                                                {d?.label}
+                                                            </label>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </fieldset>
+                                            <div className="d-flex justify-content-end ">
+                                                <button
+                                                    disabled={isSubmit}
+                                                    type="submit"
+                                                    className="btn btn-primary me-2"
+                                                >
+                                                    Submit
+                                                </button>
+                                                <button type="reset" className="btn btn-secondary">
+                                                    Reset
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                                 {/* End floating Labels Form */}
                             </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="card">
+                            <img src={previewImg} alt="" />
                         </div>
                     </div>
                 </div>
@@ -201,4 +218,4 @@ const Edit = () => {
     );
 };
 
-export default Edit;
+export default Create;

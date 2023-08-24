@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout";
 import { Link, useNavigate } from "react-router-dom";
-import { InputCompt, SelectCompt } from "../../components/InputCompt";
+import { InputCompt, InputFileCompt, SelectCompt } from "../../components/InputCompt";
 import httpRequest from "../../utils/httpRequest";
 import Swal from "sweetalert2";
 import Select from "react-select";
@@ -9,18 +9,21 @@ import Select from "react-select";
 const Create = () => {
     const [isSubmit, setIsSubmit] = useState(false);
     const [optRole, setOptRole] = useState([]);
+    const [previewImg, setPreviewImg] = useState("");
 
-    const [name, setName] = useState("");
     const [address, setAddress] = useState("");
+    const [name, setName] = useState("");
     const [telp, setTelp] = useState("");
     const [role, setRole] = useState("");
+    const [image, setImage] = useState(null);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
     const navigate = useNavigate();
 
     const dataView = {
-        title: "Create Detail Product",
-        linkBack: "/detail-product",
+        title: "Create Staff",
+        linkBack: "/staff",
     };
 
     const fetchRole = () => {
@@ -36,19 +39,33 @@ const Create = () => {
         fetchRole();
     }, []);
 
+    const handleImagePreview = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            setImage(selectedFile);
+
+            const imageUrl = URL.createObjectURL(selectedFile);
+            setPreviewImg(imageUrl);
+        }
+    };
+
     const handleSubmit = (e) => {
         setIsSubmit(true);
         e.preventDefault();
+        const formData = new FormData();
+
+        formData.append("profile_name", name);
+        formData.append("address", address);
+        formData.append("telp", telp);
+        formData.append("role_id", role);
+        formData.append("username", username);
+        formData.append("password", password);
+        formData.append("image", image);
 
         httpRequest({
-            url: "/detail-product",
+            url: "/user",
             method: "POST",
-            data: {
-                // product_id: productName?.value,
-                // room_id: roomName?.value,
-                // status_id: statusName,
-                // qr_code: qrCode,
-            },
+            data: formData,
         })
             .then((res) => {
                 if (res.status == 201) {
@@ -88,7 +105,11 @@ const Create = () => {
                             <div className="card-body">
                                 <h5 className="card-title">Form {dataView.title}</h5>
                                 {/* Floating Labels Form */}
-                                <form className="row g-3" onSubmit={handleSubmit}>
+                                <form
+                                    className="row g-3"
+                                    onSubmit={handleSubmit}
+                                    encType="multipart/form-data"
+                                >
                                     <div className="row">
                                         <div className="col-md-6">
                                             <InputCompt
@@ -105,6 +126,23 @@ const Create = () => {
                                                 onChange={(e) => setTelp(e.target.value)}
                                                 title="Telp"
                                                 value={telp}
+                                            />
+                                            <InputFileCompt
+                                                onChange={handleImagePreview}
+                                                title="Profile image"
+                                                // accept="image/*"
+                                            />
+                                        </div>
+                                        <div className="col-md-6">
+                                            <InputCompt
+                                                onChange={(e) => setUsername(e.target.value)}
+                                                title="Username"
+                                                value={username}
+                                            />
+                                            <InputCompt
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                title="Password"
+                                                value={password}
                                             />
                                             <fieldset className="row my-3">
                                                 <legend className="col-form-label col-sm-3 pt-0">Role</legend>
@@ -129,18 +167,6 @@ const Create = () => {
                                                     ))}
                                                 </div>
                                             </fieldset>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <InputCompt
-                                                onChange={(e) => setUsername(e.target.value)}
-                                                title="Username"
-                                                value={username}
-                                            />
-                                            <InputCompt
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                title="Password"
-                                                value={password}
-                                            />
                                             <div className="d-flex justify-content-end ">
                                                 <button
                                                     disabled={isSubmit}
@@ -158,6 +184,11 @@ const Create = () => {
                                 </form>
                                 {/* End floating Labels Form */}
                             </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="card">
+                            <img src={previewImg} alt="" />
                         </div>
                     </div>
                 </div>

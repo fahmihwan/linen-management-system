@@ -7,7 +7,7 @@ import { PaginationCompt } from "../../components/PaginationCompt";
 
 const Index = () => {
     const [data, setData] = useState({});
-    const [linkPage, setLinkPage] = useState("/detail-products");
+    const [linkPage, setLinkPage] = useState("/users");
 
     const dataView = {
         title: "List staff",
@@ -19,6 +19,7 @@ const Index = () => {
             url: linkPage,
             method: "get",
         }).then((res) => {
+            console.log(res.data?.data);
             setData(res.data?.data);
         });
     };
@@ -31,7 +32,7 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 httpRequest({
-                    url: `/detail-product/${id}`,
+                    url: `/user/${id}`,
                     method: "DELETE",
                 }).then((res) => {
                     fetchData();
@@ -44,7 +45,7 @@ const Index = () => {
     };
 
     useEffect(() => {
-        // fetchData();
+        fetchData();
     }, [linkPage]);
 
     return (
@@ -73,7 +74,7 @@ const Index = () => {
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Nama</th>
-                                        <th scope="col">username</th>
+                                        <th scope="col">Username</th>
                                         <th scope="col">Address</th>
                                         <th scope="col">Telp</th>
                                         <th scope="col">role</th>
@@ -84,13 +85,23 @@ const Index = () => {
                                     {data?.data?.map((d, i) => (
                                         <tr key={i}>
                                             <th scope="row">{i + 1}</th>
-                                            <td>{d?.product?.product_name}</td>
-                                            <td>{d?.room?.room_name}</td>
-                                            <td>{d?.qr_code}</td>
-                                            <td>{d?.status?.status_name}</td>
+                                            <td>{d?.profile?.profile_name}</td>
+                                            <td>{d?.username}</td>
+                                            <td>{d?.profile?.address}</td>
+                                            <td>{d?.profile?.telp}</td>
+                                            <td>{d?.role?.role_name}</td>
+                                            <td>
+                                                <div>
+                                                    <img
+                                                        width={50}
+                                                        src={"http://127.0.0.1:8000/storage/" + d?.image}
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            </td>
                                             <td>
                                                 <Link
-                                                    to={`/detail-product/${d?.id}/edit`}
+                                                    to={`/staff/${d?.id}/edit`}
                                                     className="btn btn-warning me-2"
                                                 >
                                                     Edit

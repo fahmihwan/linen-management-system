@@ -91,6 +91,11 @@ export function RouterElement() {
             name: "staff-index",
             element: lazy(() => import(`../pages/staff/Create`)),
         },
+        {
+            path: "/staff/:id/edit",
+            name: "staff-edit",
+            element: lazy(() => import(`../pages/staff/Edit`)),
+        },
     ];
 
     return routes;

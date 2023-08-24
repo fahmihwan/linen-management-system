@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Profile::class);
-            $table->foreignIdFor(Role::class);
-            $table->string('username');
+            $table->string('username')->unique();
             $table->string('password');
             $table->string('image');
+            $table->foreignIdFor(Profile::class);
+            $table->foreignIdFor(Role::class);
             $table->rememberToken();
             $table->timestamps();
         });

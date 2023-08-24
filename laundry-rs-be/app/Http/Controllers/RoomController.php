@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 class RoomController extends Controller
 {
 
-
     public function index(Request $request)
     {
         return response()->json([
