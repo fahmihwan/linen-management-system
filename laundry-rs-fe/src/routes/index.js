@@ -96,6 +96,22 @@ export function RouterElement() {
             name: "staff-edit",
             element: lazy(() => import(`../pages/staff/Edit`)),
         },
+        // user
+        {
+            path: "/",
+            name: "auth-user",
+            element: lazy(() => import(`../pages/user-interface/Login`)),
+        },
+        {
+            path: "/activity-menu",
+            name: "activity-user",
+            element: lazy(() => import(`../pages/user-interface/ActivityMenu`)),
+        },
+        {
+            path: "/activity-menu/:menu/scanqr",
+            name: "activity-user",
+            element: lazy(() => import(`../pages/user-interface/ScanQrCode`)),
+        },
     ];
 
     return routes;
