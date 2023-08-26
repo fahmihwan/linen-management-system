@@ -27,7 +27,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/super-admin', [AuthController::class, 'auth_super_admin']);
+Route::post('/auth/admin', [AuthController::class, 'auth_admin']);
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/products', [ProductController::class, 'index']);

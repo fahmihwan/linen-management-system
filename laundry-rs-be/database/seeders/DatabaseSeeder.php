@@ -37,6 +37,19 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
         ]);
 
+
+        Profile::create([
+            'profile_name' => 'brian',
+            'address' => 'dsadasdsa',
+            'telp' => '081231235',
+        ]);
+        \App\Models\User::create([
+            'profile_id' => 2,
+            'username' => 'brian',
+            'password' => Hash::make('qweqwe123'),
+            'role_id' => 2,
+        ]);
+
         // 'profile_name' => 'required|string',
         // 'address' => 'required',
         // 'telp' => 'required',

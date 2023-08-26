@@ -31,7 +31,7 @@ export default function AuthenticatedLayout({ children }) {
             url: "/auth/logout",
             method: "POST",
         }).then((res) => {
-            navigate("/");
+            navigate("/super-admin/login");
         });
     };
     return (
