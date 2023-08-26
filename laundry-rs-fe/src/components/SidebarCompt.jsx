@@ -52,19 +52,19 @@ export const SidebarCompt = () => {
                     </ul>
                 </li>
                 <li className="nav-item">
-                    <Link to="admin/detail-product" className="nav-link collapsed">
+                    <Link to="/admin/detail-product" className="nav-link collapsed">
                         <i className="bi bi-grid" />
                         <span>Detail Product</span>
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="admin/staff" className="nav-link collapsed">
+                    <Link to="/admin/staff" className="nav-link collapsed">
                         <i className="bi bi-grid" />
                         <span>Staff</span>
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="admin/detail-product" className="nav-link collapsed">
+                    <Link to="/admin/detail-product" className="nav-link collapsed">
                         <i className="bi bi-grid" />
                         <span>History</span>
                     </Link>

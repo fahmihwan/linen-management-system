@@ -13,14 +13,27 @@ import "../assets/css/style.css";
 import logo from "../assets/img/logo.png";
 import profile from "../assets/img/profile-img.jpg";
 import { SidebarCompt } from "./../components/SidebarCompt";
+import httpRequest from "../utils/httpRequest";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function AuthenticatedLayout({ children }) {
-    const [sidebarTg, setSidebarTg] = useState(false);
+    const dataState = useSelector((state) => state?.user?.dataUser);
 
+    const [sidebarTg, setSidebarTg] = useState(false);
+    const navigate = useNavigate();
     const toggleSidebar = () => {
         setSidebarTg(!sidebarTg);
     };
 
+    const handleLogout = () => {
+        httpRequest({
+            url: "/auth/logout",
+            method: "POST",
+        }).then((res) => {
+            navigate("/");
+        });
+    };
     return (
         <div className={sidebarTg ? "toggle-sidebar" : ""}>
             <header id="header" className="header fixed-top d-flex align-items-center">
@@ -127,12 +140,14 @@ export default function AuthenticatedLayout({ children }) {
                                 data-bs-toggle="dropdown"
                             >
                                 <img src={profile} alt="Profile" className="rounded-circle" />
-                                <span className="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                                <span className="d-none d-md-block dropdown-toggle ps-2">
+                                    {dataState?.username}
+                                </span>
                             </a>
                             {/* End Profile Iamge Icon */}
                             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                 <li className="dropdown-header">
-                                    <h6>Kevin Anderson</h6>
+                                    <h6>{dataState?.username}</h6>
                                     <span>Web Designer</span>
                                 </li>
                                 <li>
@@ -175,10 +190,14 @@ export default function AuthenticatedLayout({ children }) {
                                     <hr className="dropdown-divider" />
                                 </li>
                                 <li>
-                                    <a className="dropdown-item d-flex align-items-center" href="#">
+                                    <button
+                                        onClick={handleLogout}
+                                        className="dropdown-item d-flex align-items-center"
+                                        href="#"
+                                    >
                                         <i className="bi bi-box-arrow-right" />
                                         <span>Sign Out</span>
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                             {/* End Profile Dropdown Items */}

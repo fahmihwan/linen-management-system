@@ -9,10 +9,10 @@ export const InputCompt = ({ value, title, onChange, type = "text" }) => {
                 onChange={onChange}
                 type={type}
                 className="form-control mb-2"
-                id="floatingName"
+                id={"floatingName" + title}
                 placeholder={title}
             />
-            <label htmlFor="floatingName">{title}</label>
+            <label htmlFor={"floatingName" + title}>{title}</label>
         </div>
     );
 };

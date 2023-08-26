@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Activity;
 use App\Models\Detail_product;
 use App\Models\Room;
 use App\Models\Status;
@@ -18,6 +19,7 @@ return new class extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Activity::class);
             $table->foreignIdFor(Detail_product::class);
             $table->dateTime('date');
             $table->foreignIdFor(Status::class);
